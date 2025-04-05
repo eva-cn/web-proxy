@@ -1,4 +1,9 @@
 import fetch from 'node-fetch';
+import https from 'https';
+
+const agent = new https.Agent({
+  rejectUnauthorized: false, // ⚠️ Ne jamais utiliser en production !
+});
 
 export default async function handler(req, res) {
   const { url } = req.query;
@@ -8,7 +13,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { agent });
 
     if (!response.ok) {
       return res.status(response.status).json({ error: 'Failed to fetch image' });
