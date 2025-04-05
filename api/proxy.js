@@ -15,7 +15,8 @@ export default async function handler(req, res) {
     }
 
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', response.headers.get('content-type'));
+    res.setHeader('Content-Type', response.headers.get('content-type') || 'image/jpeg');
+    res.setHeader('Content-Disposition', 'inline');
 
     response.body.pipe(res);
   } catch (err) {
