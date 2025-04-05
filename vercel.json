@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/proxy.js": {
-      "runtime": "nodejs"
+      "runtime": "nodejs@22x"
     }
   },
   "routes": [
