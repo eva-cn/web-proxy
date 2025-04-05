@@ -14,11 +14,15 @@ export default async function handler(req, res) {
       return res.status(response.status).json({ error: 'Failed to fetch image' });
     }
 
+    const contentType = response.headers.get('content-type') || 'image/jpeg';
+    const buffer = Buffer.from(await response.arrayBuffer());
+
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', response.headers.get('content-type') || 'image/jpeg');
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Length', buffer.length);
     res.setHeader('Content-Disposition', 'inline');
 
-    response.body.pipe(res);
+    res.status(200).send(buffer);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Proxy error' });
